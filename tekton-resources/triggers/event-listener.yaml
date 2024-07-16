@@ -23,6 +23,6 @@ spec:
       - name: "eventTypes"
         value: ["push"]
     bindings:
-      - ref: trigger-binding-tekton-cicd
+      - ref: pipeline-binding
     template:
-      ref: trigger-template-tekton-cicd
+      ref: pipeline-template
