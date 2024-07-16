@@ -8,7 +8,6 @@ spec:
   - name: gitrevision
     value: $(body.head_commit.id)
   - name: gitrepositoryurl
-    value: $(body.ssh_url)
+    value: $(body.repository.ssh_url)
   - name: contenttype
     value: $(header.Content-Type)
-    
