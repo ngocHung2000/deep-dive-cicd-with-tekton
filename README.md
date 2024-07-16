@@ -65,3 +65,16 @@ kubectl apply --filename https://storage.googleapis.com/tekton-releases/triggers
 kubectl apply --filename https://storage.googleapis.com/tekton-releases/dashboard/latest/release.yaml
 kubectl patch svc tekton-dashboard -n tekton-pipelines -p '{"spec": {"type": "NodePort"}}'
 ```
+
+# Secure for routing
+
+```shell
+# https://docs.openshift.com/container-platform/4.9/cicd/pipelines/securing-webhooks-with-event-listeners.html
+oc label namespace <ns-name> operator.tekton.dev/enable-annotation=enabled
+
+openssl genrsa -out tls.key 2048
+openssl req -new -key tls.key -out tls.csr
+openssl x509 -req -in tls.csr -signkey tls.key -out tls.crt
+openssl req -x509 -newkey rsa:2048 -nodes -keyout ca.key -out ca.crt -days 365 -subj "/C=US/ST=State/L=Locality/O=Organization/CN=Root CA"
+oc create route reencrypt --service=<svc-name> --cert=tls.crt --key=tls.key --ca-cert=ca.crt --hostname=<hostname>
+```

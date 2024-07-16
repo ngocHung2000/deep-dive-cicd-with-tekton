@@ -22,6 +22,13 @@ spec:
     spec:
       pipelineRef:
         name: pipeline-sample-app
+      params:
+      - name: contenttype
+        value: $(tt.params.contenttype)
+      - name: git-revision
+        value: $(tt.params.gitrevision)
+      - name: git-url
+        value: $(tt.params.gitrepositoryurl)
       podTemplate:
         securityContext:
           fsGroup: 65532
@@ -33,6 +40,3 @@ spec:
       - name: git-credentials
         secret:
           secretName: git-credentials
-      params:
-      - name: repo-url
-        value: git@github.com:ngocHung2000/argocd-deployment-strategies.git

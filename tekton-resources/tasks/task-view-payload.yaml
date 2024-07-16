@@ -1,0 +1,26 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: task-view-payload
+  namespace: cicd
+spec:
+  description: Read and display README file.
+  params:
+  - name: gitrevision
+    description: The git revision
+  - name: gitrepositoryurl
+    description: The git repository url
+  - name: contenttype
+    description: The Content-Type of the event
+  workspaces:
+  - name: source
+  steps:
+  - name: read
+    workingDir: (workspaces.source.path)
+    image: alpine:latest
+    script: |
+      #!/usr/bin/env sh
+      echo '######## $(params.gitrevision) ###################'
+      echo '******** $(params.gitrepositoryurl) **************'
+      echo '!!!!!!!! $(params.contenttype) !!!!!!!!!!!!!!!!!!!'
+      

@@ -7,9 +7,12 @@ spec:
   description: | 
     This pipeline clones a git repo, then echoes the README file to the stout.
   params:
-  - name: repo-url
+  - name: gitrepositoryurl
     type: string
-    description: The git repo URL to clone from.
+  - name: gitrevision
+    type: string
+  - name: contenttype
+    type: string
   workspaces:
   - name: shared-data
   - name: git-credentials
@@ -24,4 +27,19 @@ spec:
       workspace: git-credentials
     params:
     - name: url
-      value: $(params.repo-url)
+      value: $(params.gitrepositoryurl)
+  - name: task-view-payload
+    taskRef:
+      name: task-view-payload
+    workspaces:
+      - name: source
+        workspace: shared-data
+    runAfter:
+      - task-clone-source
+    params:
+      - name: gitrevision
+        value: $(params.gitrevision)
+      - name: gitrepositoryurl
+        value: "$(params.gitrepositoryurl)"
+      - name: contenttype
+        value: "$(params.contenttype)"
