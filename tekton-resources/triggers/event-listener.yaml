@@ -6,6 +6,9 @@ metadata:
     tekton.dev/payload-validation: "true"
   namespace: cicd
 spec:
+  resources:
+    kubernetesResource:
+      serviceType: NodePort
   triggers:
   - name: github-pr-group
     interceptors:
