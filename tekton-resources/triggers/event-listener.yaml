@@ -6,6 +6,7 @@ metadata:
     tekton.dev/payload-validation: "true"
   namespace: cicd
 spec:
+  serviceAccountName: sa-pipeline
   resources:
     kubernetesResource:
       serviceType: NodePort
