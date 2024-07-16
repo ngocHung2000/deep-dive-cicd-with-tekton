@@ -36,22 +36,3 @@ spec:
       params:
       - name: repo-url
         value: git@github.com:ngocHung2000/argocd-deployment-strategies.git
-  # - apiVersion: tekton.dev/v1beta1
-  #   kind: PipelineRun
-  #   metadata:
-  #     generateName: simple-pipeline-run-
-  #   spec:
-  #     pipelineRef:
-  #       name: simple-pipeline
-  #     params:
-  #     - name: message
-  #       value: $(tt.params.message)
-  #     - name: contenttype
-  #       value: $(tt.params.contenttype)
-  #     - name: git-revision
-  #       value: $(tt.params.gitrevision)
-  #     - name: git-url
-  #       value: $(tt.params.gitrepositoryurl)
-  #     workspaces:
-  #     - name: git-source
-  #       emptyDir: {}
