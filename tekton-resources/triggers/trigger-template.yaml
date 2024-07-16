@@ -1,0 +1,57 @@
+
+apiVersion: triggers.tekton.dev/v1beta1
+kind: TriggerTemplate
+metadata:
+  name: pipeline-template
+  namespace: cicd
+spec:
+  params:
+  - name: gitrevision
+    description: The git revision
+    default: main
+  - name: gitrepositoryurl
+    description: The git repository url
+  - name: contenttype
+    description: The Content-Type of the event
+  resourcetemplates:
+  - apiVersion: tekton.dev/v1beta1
+    kind: PipelineRun
+    metadata:
+      generateName: pipeline-run-sample-app-
+      namespace: cicd
+    spec:
+      pipelineRef:
+        name: pipeline-sample-app
+      podTemplate:
+        securityContext:
+          fsGroup: 65532
+      serviceAccountName: sa-pipeline
+      workspaces:
+      - name: shared-data
+        persistentVolumeClaim:
+          claimName: pvc-cicd
+      - name: git-credentials
+        secret:
+          secretName: git-credentials
+      params:
+      - name: repo-url
+        value: git@github.com:ngocHung2000/argocd-deployment-strategies.git
+  # - apiVersion: tekton.dev/v1beta1
+  #   kind: PipelineRun
+  #   metadata:
+  #     generateName: simple-pipeline-run-
+  #   spec:
+  #     pipelineRef:
+  #       name: simple-pipeline
+  #     params:
+  #     - name: message
+  #       value: $(tt.params.message)
+  #     - name: contenttype
+  #       value: $(tt.params.contenttype)
+  #     - name: git-revision
+  #       value: $(tt.params.gitrevision)
+  #     - name: git-url
+  #       value: $(tt.params.gitrepositoryurl)
+  #     workspaces:
+  #     - name: git-source
+  #       emptyDir: {}

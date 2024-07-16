@@ -1,0 +1,22 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: pipeline-run-sample-app-
+  namespace: cicd
+spec:
+  pipelineRef:
+    name: pipeline-sample-app
+  podTemplate:
+    securityContext:
+      fsGroup: 65532
+  serviceAccountName: sa-pipeline
+  workspaces:
+  - name: shared-data
+    persistentVolumeClaim:
+      claimName: pvc-cicd
+  - name: git-credentials
+    secret:
+      secretName: git-credentials
+  params:
+  - name: repo-url
+    value: git@github.com:ngocHung2000/argocd-deployment-strategies.git
