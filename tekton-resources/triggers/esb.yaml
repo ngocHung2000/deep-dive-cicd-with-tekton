@@ -1,49 +1,49 @@
-# https://www.redhat.com/en/blog/filtering-tekton-trigger-operations
-apiVersion: triggers.tekton.dev/v1alpha1
-kind: Trigger
-metadata:
-  name: folder-x-trigger
-spec:
-  eventListener: git-event-listener
-  filter:
-    git:
-      changed: ["folder-x/**"]
-  template:
-    name: folder-x-pipeline
+# # https://www.redhat.com/en/blog/filtering-tekton-trigger-operations
+# apiVersion: triggers.tekton.dev/v1alpha1
+# kind: Trigger
+# metadata:
+#   name: folder-x-trigger
+# spec:
+#   eventListener: git-event-listener
+#   filter:
+#     git:
+#       changed: ["folder-x/**"]
+#   template:
+#     name: folder-x-pipeline
 
----
+# ---
 
-apiVersion: triggers.tekton.dev/v1alpha1
-kind: Trigger
-metadata:
-  name: folder-y-trigger
-spec:
-  eventListener: git-event-listener
-  filter:
-    git:
-      changed: ["folder-y/**"]
-  template:
-    name: folder-y-pipeline
----
-apiVersion: triggers.tekton.dev/v1alpha1
-kind: EventListener
-metadata:
-  name: git-event-listener
-spec:
-  triggers:
-  - name: folder-x-trigger
-    bindings:
-    - kind: GitLab
-      ref:
-        name: my-repo
-        url: https://gitlab.com/my-org/my-repo.git
-    template:
-      name: folder-x-pipeline
-  - name: folder-y-trigger
-    bindings:
-    - kind: GitLab
-      ref:
-        name: my-repo
-        url: https://gitlab.com/my-org/my-repo.git
-    template:
-      name: folder-y-pipeline
+# apiVersion: triggers.tekton.dev/v1alpha1
+# kind: Trigger
+# metadata:
+#   name: folder-y-trigger
+# spec:
+#   eventListener: git-event-listener
+#   filter:
+#     git:
+#       changed: ["folder-y/**"]
+#   template:
+#     name: folder-y-pipeline
+# ---
+# apiVersion: triggers.tekton.dev/v1alpha1
+# kind: EventListener
+# metadata:
+#   name: git-event-listener
+# spec:
+#   triggers:
+#   - name: folder-x-trigger
+#     bindings:
+#     - kind: GitLab
+#       ref:
+#         name: my-repo
+#         url: https://gitlab.com/my-org/my-repo.git
+#     template:
+#       name: folder-x-pipeline
+#   - name: folder-y-trigger
+#     bindings:
+#     - kind: GitLab
+#       ref:
+#         name: my-repo
+#         url: https://gitlab.com/my-org/my-repo.git
+#     template:
+#       name: folder-y-pipeline
